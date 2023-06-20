@@ -31,14 +31,19 @@ public class PlayScene implements Screen {
         ball1 = new Ball(directionArrowOne);
         ball2 = new Ball(directionArrowTwo);
 
-        ball1.setPosition(320, 100);
-        ball2.setPosition(300, 400);
+        ball2.setPosition(400, 200);
+        ball1.setPosition(368, 145);
 
 
         stage.addActor(ball1);
         stage.addActor(ball2);
         stage.addActor(directionArrowOne);
         stage.addActor(directionArrowTwo);
+
+        ball2.generateDirectionArrowAngle(new Vector2(ball1.getX(), ball1.getY()));
+
+        ball2.setDirectionArrowAngle(ball2.generateDirectionArrowAngle(new Vector2(ball1.getX(), ball1.getY())));
+        ball2.updateDirectionArrowPosition();
 
         System.out.println("Position ball1 x= " + ball1.getX() + " y = " + ball1.getY());
 
