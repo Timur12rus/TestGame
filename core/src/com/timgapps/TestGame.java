@@ -28,7 +28,7 @@ public class TestGame extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
-//        atlas = new TextureAtlas("images/pack.atlas");
+        atlas = new TextureAtlas("assets/pack.atlas");
         showScene();
     }
 
@@ -45,6 +45,6 @@ public class TestGame extends Game {
     @Override
     public void dispose() {
         super.dispose();
-//        atlas.dispose();
+        atlas.dispose();
     }
 }

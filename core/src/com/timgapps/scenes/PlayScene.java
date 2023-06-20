@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.timgapps.TestGame;
+import com.timgapps.actors.DirectionArrow;
 import com.timgapps.actors.Ball;
 
 public class PlayScene implements Screen {
@@ -16,17 +17,33 @@ public class PlayScene implements Screen {
     private Ball ball1;
     private Ball ball2;
 
+    private DirectionArrow directionArrowOne;
+    private DirectionArrow directionArrowTwo;
+
     public PlayScene(TestGame testGame) {
         this.testGame = testGame;
         stage = new Stage();
-        ball1 = new Ball(new Vector2(200, 300));
-        ball2 = new Ball(new Vector2(400, 500));
-//
+
+        directionArrowOne = new DirectionArrow();
+
+        directionArrowTwo = new DirectionArrow();
+
+        ball1 = new Ball(directionArrowOne);
+        ball2 = new Ball(directionArrowTwo);
+
+        ball1.setPosition(320, 100);
+        ball2.setPosition(300, 400);
+
+
         stage.addActor(ball1);
         stage.addActor(ball2);
+        stage.addActor(directionArrowOne);
+        stage.addActor(directionArrowTwo);
 
-        ball1.setX(250);
+        System.out.println("Position ball1 x= " + ball1.getX() + " y = " + ball1.getY());
+
     }
+
 
     @Override
     public void show() {
