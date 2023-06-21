@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.timgapps.MyInputProcessor;
 import com.timgapps.TestGame;
 import com.timgapps.actors.DirectionArrow;
 import com.timgapps.actors.Ball;
@@ -20,9 +21,12 @@ public class PlayScene implements Screen {
     private DirectionArrow directionArrowOne;
     private DirectionArrow directionArrowTwo;
 
+    private MyInputProcessor myInputProcessor;
+
     public PlayScene(TestGame testGame) {
         this.testGame = testGame;
         stage = new Stage();
+        myInputProcessor = new MyInputProcessor(this);
 
         directionArrowOne = new DirectionArrow();
 
@@ -40,24 +44,41 @@ public class PlayScene implements Screen {
         stage.addActor(directionArrowOne);
         stage.addActor(directionArrowTwo);
 
-        ball2.generateDirectionArrowAngle(new Vector2(ball1.getX(), ball1.getY()));
-
-        ball2.setDirectionArrowAngle(ball2.generateDirectionArrowAngle(new Vector2(ball1.getX(), ball1.getY())));
-        ball2.updateDirectionArrowPosition();
-
-        System.out.println("Position ball1 x= " + ball1.getX() + " y = " + ball1.getY());
+        generateDirectionArrowAngle(ball1, ball2);
 
     }
 
+    // вычисляет угол отклонения второго шара(ф - угол) по которому ударил первый шар
+    // ball2 - шар№2
+    // ball1 - шар№1
+    public void generateDirectionArrowAngle(Ball ball1, Ball ball2) {
+        // центр позиции шара №2
+        Vector2 ball2CenterPosition = ball2.getCenterPosition();
+        Vector2 ball1CenterPosition = ball1.getCenterPosition();
+
+        Vector2 vector2 = new Vector2(ball2CenterPosition.sub(ball1CenterPosition));
+
+        float directionArrowAngle = vector2.angleDeg() - 90;
+//        System.out.println(directionArrowAngle);
+
+        ball2.setDirectionArrowAngle(directionArrowAngle);
+        ball2.updateDirectionArrowPosition();
+
+//        return vector2.angleDeg() - 90;
+    }
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(stage);
+        Gdx.input.setInputProcessor(myInputProcessor);
+//        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        if (ball1 != null && ball2 != null) {
+            generateDirectionArrowAngle(ball1, ball2);
+        }
         stage.act(delta);
         stage.draw();
     }

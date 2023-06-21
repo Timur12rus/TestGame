@@ -24,6 +24,10 @@ public class Ball extends GameActor {
 
     }
 
+    public Vector2 getCenterPosition() {
+        return new Vector2(getX() + getWidth() / 2, getY() + getHeight() / 2);
+    }
+
     // рассчитаем угол отклонения второго шара после удара(по которому бьет первый)
     public float generateDirectionArrowAngle(Vector2 otherBallPosition) {
         Vector2 centerPositionOtherBall = new Vector2(otherBallPosition.x + getWidth() / 2, otherBallPosition.y + getHeight() / 2);
